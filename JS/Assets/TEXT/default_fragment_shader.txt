@@ -1,0 +1,13 @@
+                         
+
+precision mediump float;
+varying vec4 texColor;
+varying vec3 R;
+uniform samplerCube texMap;
+
+void main()
+{
+ vec4 tColor = textureCube(texMap, R);
+ 
+ gl_FragColor = vec4(tColor.rgb+texColor.rgb,1.0);
+} 

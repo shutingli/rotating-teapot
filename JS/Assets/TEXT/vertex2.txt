@@ -1,0 +1,32 @@
+uniform mat4 modelMatrix;       
+uniform mat4 viewMatrix;        
+uniform mat4 projectionMatrix;  
+uniform sampler2D usampler;
+uniform vec3 ambient;
+
+
+
+attribute vec4 vertexPosition;   
+//attribute vec4 vertexNormal; 
+attribute vec2 vertexTexture;
+
+varying float v_Dot;
+varying vec2 vtexCoord;
+varying vec4 cColor;
+
+void main()
+{      
+	//vec4 color = texture2D(usampler, vtexCoord);
+	vec4 color = texture2D(usampler, vertexTexture);
+	//vertexPosition.z = color.x;                  
+	vec4 position_h = vec4(vertexPosition.x,vertexPosition.y+color.x*10.0,vertexPosition.z,1.0);
+    gl_Position = projectionMatrix * viewMatrix * modelMatrix * position_h;
+   // gl_PointSize = 10.0;                    
+    vec4 ambient = vec4(0.5, 0.5, 0.8,1.0);
+    vtexCoord = vertexTexture;
+    
+    cColor = color * ambient;
+   // vec4 transNormal = u_normalMatrix * vec4(vertexNormal, 1);
+   // v_Dot = max(dot(transNormal.xyz, lightDir), 0.0);                
+}                                       
+
